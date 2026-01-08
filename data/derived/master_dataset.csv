@@ -1,0 +1,9 @@
+study_id,species,measure_kind,measure_name,effect_type,effect_value,paper_key,citation_key,population,task_domain,task_name,extraction_method,notes,n,effect_se
+Winterfeld1998,Rodent,biomarker,PFC_dopamine,cohens_d,-3.76,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Winterfeld1998,Rodent,behavior,working memory performance (normalized),cohens_d,-2.5,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Tsukada2005b,Primate,biomarker,PFC_dopamine,cohens_d,-3.68,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Tsukada2005b,Primate,behavior,working memory performance (normalized),cohens_d,-3.3,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Liu2016,Rodent,biomarker,PFC_dopamine,cohens_d,-3.55,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Liu2016,Rodent,behavior,working memory performance (normalized),cohens_d,-3.73,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Bhagya2011,Rodent,biomarker,PFC_dopamine,cohens_d,-3.46,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,
+Bhagya2011,Rodent,behavior,working memory performance (normalized),cohens_d,-0.37,example_inverted_u,example_inverted_u,mixed,working_memory,n/a (stub),computed,starter subset for wiring; replace with full extraction,,

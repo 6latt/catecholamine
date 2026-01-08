@@ -1,0 +1,5 @@
+study,species,biomarker_type,behavior_effect_size_d,dopamine_effect_size_d
+Winterfeld1998,Rodent,PFC_dopamine,-2.50,-3.76
+Tsukada2005b,Primate,PFC_dopamine,-3.30,-3.68
+Liu2016,Rodent,PFC_dopamine,-3.73,-3.55
+Bhagya2011,Rodent,PFC_dopamine,-0.37,-3.46
