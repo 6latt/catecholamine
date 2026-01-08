@@ -1,0 +1,31 @@
+paper_key: contradiction_demo_2024
+
+citation:
+  title: "Demonstration of contradiction detection with confidence intervals"
+  year: 2024
+  doi: null
+  pmid: null
+  journal: "Demo"
+
+species: human
+population: control
+
+task_domain: working_memory
+task_name: "n-back task"
+
+outcome:
+  name: "working memory accuracy"
+  units: "standardized"
+  direction_higher_is_better: true
+
+manipulation:
+  kind: drug
+  drug: "test compound"
+  dose: "various"
+  target: "D1"
+
+effect_type: cohens_d
+extraction_method: computed
+
+notes: "Demonstration data showing contradictory findings with non-overlapping CIs - should be flagged as strong contradiction"
+quality_flags: [synthetic]

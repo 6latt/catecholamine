@@ -1,0 +1,127 @@
+## Methods: Data Extraction
+
+### Extraction Protocol
+
+All quantitative data extracted from source papers follow a standardized protocol to ensure reproducibility and minimize cherry-picking:
+
+#### Paper Selection and Documentation
+
+1. **Candidate Identification**: Papers are identified through systematic searches (OpenAlex, PubMed) using predefined search terms related to catecholamines and cognitive function.
+
+2. **Rejection Tracking**: All rejected candidates are documented in `reports/rejected_candidates.csv` with:
+   - Candidate ID and bibliographic information
+   - Explicit rejection reason
+   - Reviewer name and review date
+   - This creates an audit trail preventing silent exclusion of inconvenient results
+
+3. **Inclusion Criteria**:
+   - Study reports quantitative outcomes related to attention, working memory, cognitive flexibility, salience processing, or mood
+   - Study includes manipulation or measurement of dopamine/norepinephrine systems
+   - Sufficient statistics available to compute or extract effect sizes
+
+#### Data Extraction Process
+
+Each included paper receives a unique `paper_key` identifier and a dedicated folder structure:
+
+```
+data/raw/<paper_key>/
+├── table1.csv
+├── table1.csv.meta.yaml
+├── table2.csv
+├── table2.csv.meta.yaml
+├── digitized_fig3a.csv
+├── digitized_fig3a.csv.meta.yaml
+└── README.md (optional extraction notes)
+```
+
+#### Extraction Methods
+
+Data are extracted using one of the following methods (documented in metadata):
+
+- **`table`**: Direct transcription from published tables
+- **`supplement`**: Extraction from supplementary materials
+- **`digitized`**: Curves and figures digitized using WebPlotDigitizer or similar tools
+- **`reported_effect`**: Effect sizes reported directly in text
+- **`computed`**: Effect sizes computed from reported summary statistics
+
+#### Quality Flags
+
+Each extraction is tagged with quality flags when appropriate:
+- `high_risk_bias`: Study has methodological concerns
+- `unclear_units`: Measurement units ambiguous
+- `mixed_population`: Population characteristics not fully specified
+- `synthetic`: Placeholder/example data for testing
+
+### Required Metadata Schema
+
+Every data file requires a companion `.meta.yaml` file with the following fields:
+
+```{python}
+#| echo: true
+from pathlib import Path
+import yaml
+
+ROOT = Path.cwd().parents[0]
+schema_path = ROOT / "schemas" / "raw_meta.schema.yaml"
+
+with open(schema_path, 'r') as f:
+    schema = yaml.safe_load(f)
+
+# Display required fields
+print("Required fields:")
+for field in schema.get('required', []):
+    print(f"  - {field}")
+```
+
+#### Field Descriptions
+
+**paper_key**: Unique identifier for the paper (e.g., `weber_2022_pfc_d1`)
+
+**citation**: Bibliographic information including title, year, DOI, PMID, journal
+
+**species**: `human`, `rodent`, `primate`, `in_vitro`, or `mixed`
+
+**population**: Clinical or demographic characteristics (e.g., `adhd`, `control`, `mdd`, `anxiety`, `asd`)
+
+**task_domain**: Cognitive domain assessed:
+- `attention`: Sustained attention, vigilance, attentional control
+- `working_memory`: Short-term memory maintenance and manipulation
+- `flexibility`: Set-shifting, reversal learning, cognitive flexibility
+- `salience`: Salience detection and processing
+- `mood`: Mood, motivation, anhedonia
+- `other`: Other cognitive domains
+
+**task_name**: Specific task used (e.g., "n-back", "Wisconsin Card Sort")
+
+**outcome**: Outcome measure details:
+- `name`: Outcome variable name
+- `units`: Measurement units
+- `direction_higher_is_better`: Boolean indicating outcome direction
+
+**manipulation**: Experimental manipulation details:
+- `kind`: Type of manipulation (`drug`, `stress`, `genotype`, `pet_measure`, `microdialysis`)
+- `drug`: Drug name (if applicable)
+- `dose`: Dosage information
+- `target`: Neurochemical target (`DAT`, `NET`, `D1`, `D2`, `a2a`, `b1`)
+
+**effect_type**: Statistical metric used:
+- `cohens_d`: Cohen's d (standardized mean difference)
+- `hedges_g`: Hedges' g (bias-corrected standardized mean difference)
+- `r`: Correlation coefficient
+- `beta`: Regression coefficient
+- `mean_diff`: Raw mean difference
+- `raw`: Unstandardized raw values
+
+**extraction_method**: How data were extracted (see methods above)
+
+**notes**: Free-text notes about extraction caveats or context
+
+**quality_flags**: List of quality concerns (see flags above)
+
+### Anti-Cherry-Picking Safeguards
+
+1. **Immutable Raw Data**: Original extracted files are never modified; corrections are made via new files or in the build pipeline
+2. **Version Control**: All data and metadata are tracked in git with full history
+3. **Rejection Documentation**: All excluded papers documented with explicit reasons
+4. **Comprehensive Extraction**: Extract all relevant outcomes from included papers, not just favorable results
+5. **Quality Flags**: Problematic data retained but flagged rather than silently excluded

@@ -8,6 +8,10 @@ Example:
 Writes:
   reports/candidates_openalex.csv
 
+To track rejections (anti-cherrypicking):
+  Manually review candidates and move rejected ones to reports/rejected_candidates.csv
+  with reason, reviewer, and date.
+
 OpenAlex docs: https://docs.openalex.org/
 """
 
@@ -16,6 +20,7 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
+from datetime import datetime
 
 import requests
 
@@ -39,11 +44,15 @@ def main() -> None:
     r.raise_for_status()
     data = r.json()
 
+    # Generate timestamp-based prefix for unique candidate IDs
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(
             f,
             fieldnames=[
+                "candidate_id",
                 "title",
                 "year",
                 "doi",
@@ -51,17 +60,23 @@ def main() -> None:
                 "is_oa",
                 "oa_url",
                 "cited_by_count",
+                "review_status",
             ],
         )
         w.writeheader()
-        for item in data.get("results", []):
+        for idx, item in enumerate(data.get("results", []), start=1):
             title = item.get("display_name")
             year = item.get("publication_year")
             doi = item.get("doi")
             oid = item.get("id")
             oa = item.get("open_access", {}) or {}
+            
+            # Use timestamp and index for unique candidate ID
+            candidate_id = f"cand_{timestamp}_{idx:03d}"
+            
             w.writerow(
                 {
+                    "candidate_id": candidate_id,
                     "title": title,
                     "year": year,
                     "doi": doi,
@@ -69,10 +84,15 @@ def main() -> None:
                     "is_oa": oa.get("is_oa"),
                     "oa_url": oa.get("oa_url"),
                     "cited_by_count": item.get("cited_by_count"),
+                    "review_status": "pending",
                 }
             )
 
     print(f"wrote {OUT}")
+    print("\nNext steps:")
+    print("1. Review candidates in reports/candidates_openalex.csv")
+    print("2. For rejected papers, copy the row to reports/rejected_candidates.csv")
+    print("3. Add rejection reason, reviewed_by, and review_date columns")
 
 
 if __name__ == "__main__":

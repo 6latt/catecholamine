@@ -1,0 +1,5 @@
+study_id,measure_kind,measure_name,effect_value,effect_se,n
+study1_positive,behavior,wm_accuracy,0.65,0.15,45
+study2_positive,behavior,wm_accuracy,0.48,0.12,52
+study3_negative,behavior,wm_accuracy,-0.42,0.14,48
+study4_negative,behavior,wm_accuracy,-0.38,0.13,50

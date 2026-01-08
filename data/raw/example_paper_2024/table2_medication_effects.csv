@@ -1,0 +1,5 @@
+study_id,measure_kind,measure_name,effect_value,effect_se,n
+study1_adhd,behavior,accuracy_pct,0.52,0.14,42
+study1_adhd,biomarker,striatal_DAT_binding,-0.31,0.10,42
+study2_control,behavior,accuracy_pct,0.08,0.09,38
+study2_control,biomarker,striatal_DAT_binding,-0.05,0.08,38

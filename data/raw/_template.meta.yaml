@@ -1,0 +1,33 @@
+paper_key: your_paper_key_here
+
+citation:
+  title: "Full paper title"
+  year: 2024
+  doi: "10.1234/example.doi"
+  pmid: "12345678"
+  journal: "Journal Name"
+
+species: human  # human | rodent | primate | in_vitro | mixed
+population: control  # control | adhd | mdd | anxiety | asd | schizophrenia | etc
+
+task_domain: working_memory  # attention | working_memory | flexibility | salience | mood | other
+task_name: "n-back task"
+
+outcome:
+  name: "accuracy (%)"
+  units: "percent"
+  direction_higher_is_better: true
+
+manipulation:
+  kind: drug  # drug | stress | genotype | pet_measure | microdialysis
+  drug: "methylphenidate"
+  dose: "20 mg"
+  formulation: "immediate release"
+  time_post: "60 minutes"
+  target: "DAT"  # DAT | NET | D1 | D2 | a2a | b1
+
+effect_type: cohens_d  # cohens_d | hedges_g | r | beta | mean_diff | raw
+extraction_method: table  # table | supplement | digitized | reported_effect | computed
+
+notes: "Additional details about extraction or caveats"
+quality_flags: []  # e.g., [high_risk_bias, unclear_units, mixed_population]

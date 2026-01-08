@@ -136,7 +136,12 @@ def coerce_standard(df: pd.DataFrame) -> pd.DataFrame:
 def main() -> None:
     DERIVED.mkdir(parents=True, exist_ok=True)
 
-    data_files = list(RAW.glob("*.csv")) + list(RAW.glob("*.tsv"))
+    # Recursively find all CSV/TSV files in data/raw and subdirectories (paper_key folders)
+    # Exclude template files (starting with underscore)
+    all_csv = list(RAW.rglob("*.csv"))
+    all_tsv = list(RAW.rglob("*.tsv"))
+    data_files = [f for f in (all_csv + all_tsv) if not f.name.startswith('_')]
+    
     if not data_files:
         print("no data/raw/*.csv yet")
         return

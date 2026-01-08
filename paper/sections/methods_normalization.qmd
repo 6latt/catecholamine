@@ -1,0 +1,199 @@
+## Methods: Data Normalization
+
+### Overview
+
+Raw extracted data are normalized into a unified "master dataset" with standardized columns to enable multi-axis synthesis across species, populations, and cognitive domains. This normalization is performed by `scripts/build_dataset.py`.
+
+### Standard Schema
+
+All data are converted to a long-format table with the following standard columns:
+
+```{python}
+#| echo: true
+import pandas as pd
+from pathlib import Path
+
+ROOT = Path.cwd().parents[0]
+
+# Show standard column definitions
+standard_cols = [
+    "paper_key",
+    "citation_key",
+    "study_id",
+    "species",
+    "population",
+    "task_domain",
+    "task_name",
+    "measure_kind",  # behavior | biomarker
+    "measure_name",
+    "effect_type",
+    "effect_value",
+    "effect_se",
+    "n",
+    "extraction_method",
+    "notes",
+]
+
+print("Standard columns in master_dataset.parquet:")
+for col in standard_cols:
+    print(f"  - {col}")
+```
+
+### Normalization Process
+
+#### 1. Paper-Specific Normalizers
+
+Each paper may have a unique data format in its raw extraction. We implement paper-specific normalizer functions that convert raw formats into the standard schema:
+
+```{python}
+#| echo: true
+#| eval: false
+
+# Example normalizer structure (from build_dataset.py)
+def normalize_paper_xyz(df: pd.DataFrame, meta: dict) -> pd.DataFrame:
+    """
+    Convert paper XYZ's format into standard long format.
+    
+    Input: Raw CSV columns as provided by the paper
+    Output: DataFrame with standard columns
+    """
+    out_rows = []
+    
+    for _, row in df.iterrows():
+        # Extract biomarker observation
+        if pd.notna(row.get("dopamine_measure")):
+            out_rows.append({
+                "study_id": row["study"],
+                "species": meta["species"],
+                "measure_kind": "biomarker",
+                "measure_name": "PFC_dopamine",
+                "effect_type": meta["effect_type"],
+                "effect_value": row["dopamine_measure"],
+            })
+        
+        # Extract behavior observation
+        if pd.notna(row.get("behavior_score")):
+            out_rows.append({
+                "study_id": row["study"],
+                "species": meta["species"],
+                "measure_kind": "behavior",
+                "measure_name": meta["outcome"]["name"],
+                "effect_type": meta["effect_type"],
+                "effect_value": row["behavior_score"],
+            })
+    
+    return pd.DataFrame(out_rows)
+```
+
+#### 2. Metadata Integration
+
+After normalization, metadata from `.meta.yaml` files is integrated:
+
+- **Provenance tracking**: `paper_key` and `citation_key` from metadata
+- **Context filling**: Missing columns filled from metadata (e.g., `population`, `task_domain`)
+- **Quality flags**: Preserved in `notes` field
+
+#### 3. Long Format Design
+
+The long format ensures:
+
+- **One row per observation**: Each biomarker or behavior measurement is a separate row
+- **Explicit measure_kind**: `behavior` vs `biomarker` clearly distinguished
+- **Species/population separation**: Prevents accidental mixing in analyses
+- **Paired analysis support**: Same `study_id` links biomarker and behavior measures
+
+### Current Normalizers
+
+```{python}
+#| echo: false
+import os
+
+# List all paper-specific normalizers implemented
+raw_path = ROOT / "data" / "raw"
+papers = []
+
+if raw_path.exists():
+    # Find all subdirectories (paper_key folders)
+    for item in raw_path.iterdir():
+        if item.is_dir() and not item.name.startswith('.'):
+            papers.append(item.name)
+    
+    # Also check for flat files
+    for item in raw_path.glob("*.csv"):
+        if not item.name.startswith('template'):
+            papers.append(item.stem)
+
+if papers:
+    print(f"Papers with normalized data ({len(papers)}):")
+    for paper in sorted(set(papers)):
+        print(f"  - {paper}")
+else:
+    print("No papers with data yet (example data only)")
+```
+
+### Field Mappings by Paper
+
+Below are the specific field mappings for each paper currently in the dataset:
+
+```{python}
+#| echo: false
+import yaml
+
+master_path = ROOT / "data" / "derived" / "master_dataset.parquet"
+
+if master_path.exists():
+    df = pd.read_parquet(master_path)
+    
+    print("\nPer-paper field summary:")
+    print("=" * 60)
+    
+    for paper_key in sorted(df['paper_key'].dropna().unique()):
+        paper_data = df[df['paper_key'] == paper_key]
+        
+        print(f"\n{paper_key}:")
+        print(f"  Species: {paper_data['species'].iloc[0] if len(paper_data) > 0 else 'N/A'}")
+        print(f"  Population: {paper_data['population'].iloc[0] if len(paper_data) > 0 else 'N/A'}")
+        print(f"  Task domain: {paper_data['task_domain'].iloc[0] if len(paper_data) > 0 else 'N/A'}")
+        print(f"  Measure kinds: {', '.join(paper_data['measure_kind'].dropna().unique())}")
+        print(f"  Measure names: {', '.join(paper_data['measure_name'].dropna().unique())}")
+        print(f"  Effect type: {paper_data['effect_type'].iloc[0] if len(paper_data) > 0 else 'N/A'}")
+        print(f"  Observations: {len(paper_data)}")
+        
+        # Show if SE is available
+        has_se = paper_data['effect_se'].notna().any()
+        print(f"  Standard errors: {'Yes' if has_se else 'No'}")
+        
+else:
+    print("\nNo master dataset yet. Run scripts/build_dataset.py first.")
+```
+
+### Validation
+
+After normalization, the master dataset is validated for:
+
+1. **Required columns present**: All standard columns exist (may be null)
+2. **Type consistency**: Numeric columns are numeric, categorical are categorical
+3. **Species/population integrity**: No accidental mixing within analysis groups
+4. **Effect value ranges**: Extreme outliers flagged for review
+
+### Outputs
+
+The build process generates:
+
+- **`data/derived/master_dataset.parquet`**: Main analysis file (preferred format)
+- **`data/derived/master_dataset.csv`**: Human-readable copy
+- **`data/derived/study_index.csv`**: Quick reference of papers by domain/species/population
+
+### Updating Normalizers
+
+When adding new papers:
+
+1. Extract data to `data/raw/<paper_key>/`
+2. Add `.meta.yaml` files
+3. If paper format is unique, add normalizer function to `build_dataset.py`:
+   ```python
+   elif f.name == "your_paper_data.csv":
+       df_norm = normalize_your_paper(df_raw, meta)
+   ```
+4. Run `python scripts/build_dataset.py` to rebuild master dataset
+5. Verify output in `data/derived/master_dataset.csv`

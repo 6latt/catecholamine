@@ -1,0 +1,3 @@
+study_id,species,population,task_domain,task_name,measure_kind,measure_name,effect_type,effect_value,effect_se,n,notes
+study1,human,adhd,working_memory,n-back,behavior,accuracy,cohens_d,0.45,0.12,48,baseline vs medication
+study1,human,adhd,working_memory,n-back,biomarker,PFC_dopamine,r,0.38,0.09,48,PET imaging correlation
