@@ -15,7 +15,6 @@ silent drift and accidental mixing of species/populations.
 from __future__ import annotations
 
 import glob
-import os
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
