@@ -53,7 +53,14 @@ fields:
       target: {type: str, example: DAT|NET|D1|D2|a2a|b1}
   effect_type:
     type: str
+    # cohens_d / hedges_g: standardized mean differences between groups or conditions
+    # r: correlation coefficients (e.g., between two continuous variables)
+    # beta: regression coefficients from (generalized) linear models
+    # mean_diff: raw mean difference in the original outcome units
+    # raw: unstandardized/raw outcome values (e.g., group means, single-arm data) from which
+    #      effect sizes may be derived downstream
     allowed: [cohens_d, hedges_g, r, beta, mean_diff, raw]
+    example: cohens_d
   extraction_method:
     type: str
     allowed: [table, supplement, digitized, reported_effect, computed]
