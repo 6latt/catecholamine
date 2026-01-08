@@ -5,11 +5,17 @@ this is a reproducible pipeline to:
 - analyze across axes (attention, wm, flexibility, salience, mood)
 - render a real paper with citations and auto-generated figures
 
-## quick links
+## 🚀 quick start
 
+New here? **[Start with QUICKSTART.md](QUICKSTART.md)** for a 5-minute setup guide.
+
+## 📚 documentation
+
+- **[Quick Start](QUICKSTART.md)** - Get up and running in 5 minutes
 - **[Architecture Guide](ARCHITECTURE.md)** - Complete workflow and directory structure
 - **[Protocol](protocol/PROTOCOL.md)** - Inclusion/exclusion criteria and extraction rules
 - **[Structure Overview](STRUCTURE.md)** - High-level directory layout
+- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Recent changes and features
 
 ## tldr workflow
 1) put **raw** extracted numbers in `data/raw/` (csv/tsv). never edit in-place.
