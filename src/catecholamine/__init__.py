@@ -1,1 +1,1 @@
-"""local package for analysis helpers."""
+"""Local package for analysis helpers."""
