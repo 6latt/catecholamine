@@ -102,15 +102,15 @@ def build_contradictions(df: pd.DataFrame, min_abs: float = 0.1) -> pd.DataFrame
             continue  # No contradiction if all same sign
         
         # Determine contradiction type and severity
-        has_se = (
+        both_groups_have_se = (
             pos_grp["effect_se"].notna().any() and 
             neg_grp["effect_se"].notna().any()
         )
         
-        contradiction_type = "ci_based" if has_se else "threshold_based"
+        contradiction_type = "ci_based" if both_groups_have_se else "threshold_based"
         severity = "unknown"
         
-        if has_se:
+        if both_groups_have_se:
             # Check if any pair of pos/neg effects have non-overlapping CIs
             ci_conflicts = False
             for _, pos_row in pos_grp[pos_grp["effect_se"].notna()].iterrows():

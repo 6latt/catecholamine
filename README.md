@@ -5,6 +5,12 @@ this is a reproducible pipeline to:
 - analyze across axes (attention, wm, flexibility, salience, mood)
 - render a real paper with citations and auto-generated figures
 
+## quick links
+
+- **[Architecture Guide](ARCHITECTURE.md)** - Complete workflow and directory structure
+- **[Protocol](protocol/PROTOCOL.md)** - Inclusion/exclusion criteria and extraction rules
+- **[Structure Overview](STRUCTURE.md)** - High-level directory layout
+
 ## tldr workflow
 1) put **raw** extracted numbers in `data/raw/` (csv/tsv). never edit in-place.
 2) for every raw file, add a sibling metadata file: `<file>.csv.meta.yaml`.

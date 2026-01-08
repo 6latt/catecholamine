@@ -1,1 +1,2 @@
-
+task_domain,species,population,measure_name,pos_papers,neg_papers,n_pos,n_neg,contradiction_type,severity
+working_memory,,control,wm_accuracy,contradiction_demo_2024,contradiction_demo_2024,1,1,ci_based,strong

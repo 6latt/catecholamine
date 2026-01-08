@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
+from datetime import datetime
 
 import requests
 
@@ -43,6 +44,9 @@ def main() -> None:
     r.raise_for_status()
     data = r.json()
 
+    # Generate timestamp-based prefix for unique candidate IDs
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(
@@ -66,9 +70,13 @@ def main() -> None:
             doi = item.get("doi")
             oid = item.get("id")
             oa = item.get("open_access", {}) or {}
+            
+            # Use timestamp and index for unique candidate ID
+            candidate_id = f"cand_{timestamp}_{idx:03d}"
+            
             w.writerow(
                 {
-                    "candidate_id": f"cand_{idx:03d}",
+                    "candidate_id": candidate_id,
                     "title": title,
                     "year": year,
                     "doi": doi,

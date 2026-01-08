@@ -2,3 +2,4 @@ paper_key,species,population,task_domain
 example_paper_2024,,adhd,attention
 example_inverted_u,Primate,mixed,working_memory
 example_inverted_u,Rodent,mixed,working_memory
+contradiction_demo_2024,,control,working_memory
