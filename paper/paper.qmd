@@ -42,7 +42,21 @@ df.head()
 # generate small report tables used below
 import subprocess
 
-subprocess.run(["python", "scripts/build_reports.py"], cwd=ROOT, check=False)
+result = subprocess.run(
+    ["python", "scripts/build_reports.py"],
+    cwd=ROOT,
+    check=False,
+    capture_output=True,
+    text=True,
+)
+if result.returncode != 0:
+    print("Error: build_reports.py failed with exit code", result.returncode)
+    if result.stdout:
+        print("--- build_reports.py stdout ---")
+        print(result.stdout)
+    if result.stderr:
+        print("--- build_reports.py stderr ---")
+        print(result.stderr)
 ```
 
 ## study matrix (what we have, and where)
