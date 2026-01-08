@@ -1,0 +1,95 @@
+---
+title: "catecholamine tone and pfc performance: a multidimensional synthesis"
+format:
+  html:
+    toc: true
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+bibliography: ../refs/references.bib
+---
+
+## what this paper is
+
+this doc is meant to be a living synthesis: we ingest *quantitative* findings (tables, supplementals, digitized curves), normalize them into a master dataset, then analyze across domains:
+
+- attention
+- working memory
+- flexibility
+- salience
+- mood / motivation
+
+## protocol
+
+{{< include ../protocol/PROTOCOL.md >}}
+
+## data + provenance
+
+we keep raw extractions immutable in `data/raw/` and build `data/derived/master_dataset.parquet` with scripts.
+
+```{python}
+from pathlib import Path
+import pandas as pd
+
+ROOT = Path.cwd().parents[0]
+df = pd.read_parquet(ROOT / "data" / "derived" / "master_dataset.parquet")
+df.head()
+```
+
+```{python}
+# generate small report tables used below
+import subprocess
+
+subprocess.run(["python", "scripts/build_reports.py"], cwd=ROOT, check=False)
+```
+
+## study matrix (what we have, and where)
+
+```{python}
+import pandas as pd
+
+matrix_path = ROOT / "reports" / "study_matrix.csv"
+matrix = pd.read_csv(matrix_path) if matrix_path.exists() else pd.DataFrame()
+matrix.head(20)
+```
+
+## example figure: biomarker vs behavior (same study_id)
+
+```{python}
+import matplotlib.pyplot as plt
+
+import numpy as np
+
+beh = df[df["measure_kind"] == "behavior"][
+    ["paper_key", "study_id", "effect_value", "measure_name"]
+].rename(columns={"effect_value": "behavior_d", "measure_name": "behavior_measure"})
+
+bio = df[df["measure_kind"] == "biomarker"][
+    ["paper_key", "study_id", "effect_value", "measure_name"]
+].rename(columns={"effect_value": "biomarker_d", "measure_name": "biomarker_measure"})
+
+merged = beh.merge(bio, on=["paper_key", "study_id"], how="inner")
+
+plt.figure()
+plt.scatter(merged["biomarker_d"], merged["behavior_d"])
+plt.xlabel("biomarker effect (d)")
+plt.ylabel("behavior effect (d)")
+plt.title("behavior vs biomarker effect sizes (paired by study_id)")
+plt.show()
+
+merged.head()
+```
+
+## contradictions (cells with both + and - effects)
+
+```{python}
+contr_path = ROOT / "reports" / "contradictions.csv"
+contr = pd.read_csv(contr_path) if contr_path.exists() else pd.DataFrame()
+contr.head(50)
+```
+
+## citations
+
+when you add real bib entries, cite like this: @your_paper_key.

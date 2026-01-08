@@ -1,0 +1,64 @@
+# minimal schema for data/raw/*/*.meta.yaml
+
+required:
+  - paper_key
+  - citation
+  - species
+  - population
+  - task_domain
+  - outcome
+  - effect_type
+  - extraction_method
+
+fields:
+  paper_key:
+    type: str
+    example: weber_2022_pfc_d1
+  citation:
+    type: dict
+    required:
+      - title
+    fields:
+      title: {type: str}
+      year: {type: int}
+      doi: {type: str}
+      pmid: {type: str}
+      journal: {type: str}
+  species:
+    type: str
+    allowed: [human, rodent, primate, in_vitro, mixed]
+  population:
+    type: str
+    example: adhd|control|mdd|anxiety|asd|schizophrenia
+  task_domain:
+    type: str
+    allowed: [attention, working_memory, flexibility, salience, mood, other]
+  task_name:
+    type: str
+  outcome:
+    type: dict
+    required: [name]
+    fields:
+      name: {type: str}
+      units: {type: str}
+      direction_higher_is_better: {type: bool}
+  manipulation:
+    type: dict
+    fields:
+      kind: {type: str, example: drug|stress|genotype|pet_measure|microdialysis}
+      drug: {type: str}
+      dose: {type: str}
+      formulation: {type: str}
+      time_post: {type: str}
+      target: {type: str, example: DAT|NET|D1|D2|a2a|b1}
+  effect_type:
+    type: str
+    allowed: [cohens_d, hedges_g, r, beta, mean_diff, raw]
+  extraction_method:
+    type: str
+    allowed: [table, supplement, digitized, reported_effect, computed]
+  notes:
+    type: str
+  quality_flags:
+    type: list
+    example: [high_risk_bias, unclear_units, mixed_population]
