@@ -3,6 +3,7 @@
 Outputs (in reports/):
   - study_matrix.csv : counts by domain/species/population
   - contradictions.csv : where effects disagree in sign
+    (flags studies with both positive AND negative effects with |value| >= 0.1)
 
 Run:
   python scripts/build_dataset.py

@@ -28,13 +28,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--query", required=True)
     ap.add_argument("--rows", type=int, default=50)
+    ap.add_argument("--timeout", type=int, default=60, help="Request timeout in seconds")
     args = ap.parse_args()
 
     params = {
         "search": args.query,
         "per-page": args.rows,
     }
-    r = requests.get("https://api.openalex.org/works", params=params, timeout=60)
+    r = requests.get("https://api.openalex.org/works", params=params, timeout=args.timeout)
     r.raise_for_status()
     data = r.json()
 

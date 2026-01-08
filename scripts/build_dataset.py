@@ -60,7 +60,8 @@ def load_meta_for_datafile(datafile: Path) -> dict:
 
 
 def normalize_example_inverted_u(df: pd.DataFrame, meta: dict) -> pd.DataFrame:
-    """Convert the starter example into long format.
+    """
+    Convert the starter example into long format.
 
     Expected columns:
       - study
