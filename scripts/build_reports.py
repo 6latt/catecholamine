@@ -152,6 +152,8 @@ def build_contradictions(df: pd.DataFrame, min_abs: float = 0.1) -> pd.DataFrame
 
     out = pd.DataFrame(rows)
     if not out.empty:
+        severity_order = pd.CategoricalDtype(["strong", "moderate", "weak"], ordered=True)
+        out["severity"] = out["severity"].astype(severity_order)
         out = out.sort_values(["severity", "task_domain", "species", "population", "measure_name"])
     return out
 
