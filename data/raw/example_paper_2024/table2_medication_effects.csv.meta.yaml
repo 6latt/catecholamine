@@ -1,0 +1,33 @@
+paper_key: example_paper_2024
+
+citation:
+  title: "Example paper demonstrating paper_key folder structure"
+  year: 2024
+  doi: "10.1234/example.2024"
+  pmid: null
+  journal: "Example Journal"
+
+species: human
+population: adhd
+
+task_domain: attention
+task_name: "continuous performance task"
+
+outcome:
+  name: "accuracy (%)"
+  units: "percent"
+  direction_higher_is_better: true
+
+manipulation:
+  kind: drug
+  drug: "methylphenidate"
+  dose: "0.3 mg/kg"
+  formulation: "immediate release"
+  time_post: "90 minutes"
+  target: "DAT"
+
+effect_type: cohens_d
+extraction_method: table
+
+notes: "Example showing paper_key folder structure with table extracted from published paper"
+quality_flags: []

@@ -25,6 +25,10 @@ this doc is meant to be a living synthesis: we ingest *quantitative* findings (t
 
 {{< include ../protocol/PROTOCOL.md >}}
 
+{{< include sections/methods_extraction.qmd >}}
+
+{{< include sections/methods_normalization.qmd >}}
+
 ## data + provenance
 
 we keep raw extractions immutable in `data/raw/` and build `data/derived/master_dataset.parquet` with scripts.

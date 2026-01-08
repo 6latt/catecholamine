@@ -72,7 +72,9 @@ def validate() -> int:
 
     data_files = []
     for ext in ("*.csv", "*.tsv"):
-        data_files.extend(RAW.rglob(ext))
+        # Exclude template files (starting with underscore)
+        all_files = RAW.rglob(ext)
+        data_files.extend([f for f in all_files if not f.name.startswith('_')])
 
     # allow empty repo
     if not data_files:

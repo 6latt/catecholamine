@@ -8,6 +8,10 @@ Example:
 Writes:
   reports/candidates_openalex.csv
 
+To track rejections (anti-cherrypicking):
+  Manually review candidates and move rejected ones to reports/rejected_candidates.csv
+  with reason, reviewer, and date.
+
 OpenAlex docs: https://docs.openalex.org/
 """
 
@@ -44,6 +48,7 @@ def main() -> None:
         w = csv.DictWriter(
             f,
             fieldnames=[
+                "candidate_id",
                 "title",
                 "year",
                 "doi",
@@ -51,10 +56,11 @@ def main() -> None:
                 "is_oa",
                 "oa_url",
                 "cited_by_count",
+                "review_status",
             ],
         )
         w.writeheader()
-        for item in data.get("results", []):
+        for idx, item in enumerate(data.get("results", []), start=1):
             title = item.get("display_name")
             year = item.get("publication_year")
             doi = item.get("doi")
@@ -62,6 +68,7 @@ def main() -> None:
             oa = item.get("open_access", {}) or {}
             w.writerow(
                 {
+                    "candidate_id": f"cand_{idx:03d}",
                     "title": title,
                     "year": year,
                     "doi": doi,
@@ -69,10 +76,15 @@ def main() -> None:
                     "is_oa": oa.get("is_oa"),
                     "oa_url": oa.get("oa_url"),
                     "cited_by_count": item.get("cited_by_count"),
+                    "review_status": "pending",
                 }
             )
 
     print(f"wrote {OUT}")
+    print("\nNext steps:")
+    print("1. Review candidates in reports/candidates_openalex.csv")
+    print("2. For rejected papers, copy the row to reports/rejected_candidates.csv")
+    print("3. Add rejection reason, reviewed_by, and review_date columns")
 
 
 if __name__ == "__main__":
