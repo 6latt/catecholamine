@@ -44,11 +44,12 @@ def build_study_matrix(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_contradictions(df: pd.DataFrame, min_abs: float = 0.1) -> pd.DataFrame:
-    """Flag cells where we see both positive and negative effects.
+    """
+    Flag cells where we see both positive and negative effects.
 
-This is deliberately simple and will get smarter as we add SE/CI and
-standardize outcome direction.
-"""
+    This is deliberately simple and will get smarter as we add SE/CI and
+    standardize outcome direction.
+    """
     beh = df[df["measure_kind"] == "behavior"].copy()
     beh = beh[pd.to_numeric(beh["effect_value"], errors="coerce").notna()]
     beh["effect_value"] = pd.to_numeric(beh["effect_value"], errors="coerce")
