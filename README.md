@@ -1,35 +1,60 @@
 # Catecholamine Research Repository
 
-A reproducible research pipeline for analyzing catecholamine effects on prefrontal cortex performance.
+**Automatically generate scientific papers from unstructured research notes.**
 
-## Overview
+A reproducible research pipeline that converts deep research notes into structured scientific papers with proper formatting, citations, and analysis.
 
-This repository provides a systematic pipeline to:
-- Collect and normalize quantitative findings from research papers (tables, supplementary data, digitized curves)
-- Analyze data across cognitive domains (attention, working memory, flexibility, salience, mood)
-- **Generate scientific papers from unstructured research notes**
-- Generate reproducible manuscripts with citations and auto-generated figures
+## 🚀 Quick Start
 
-## Quick Start: Generate a Paper from Research Notes
-
-The easiest way to generate a complete scientific paper from your deep research notes:
+Generate a complete scientific paper in seconds:
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the full paper generation pipeline
+# Run the paper generation pipeline
 python scripts/catecholamine_cli.py full --simple
 ```
 
-This will:
-1. Validate your raw data
-2. Build a master dataset
-3. Generate analysis reports
-4. Parse `deepresearch.md` and convert it into a structured scientific paper
-5. Render the paper to HTML
+**That's it!** Your paper will be at `paper/_output/generated_paper.html`
 
-Your paper will be available at: `paper/_output/generated_paper.html`
+### Or try the interactive demo:
+
+```bash
+python demo.py
+```
+
+## ✨ What This Does
+
+Transforms unstructured research notes (like `deepresearch.md`) into:
+- ✅ **Structured scientific paper** with proper sections
+- ✅ **Abstract** synthesizing key findings  
+- ✅ **Methods** section with quality criteria
+- ✅ **Results** organized by cognitive domain
+- ✅ **Discussion** with clinical implications
+- ✅ **Effect size extraction** from research notes
+- ✅ **HTML/PDF output** ready for publication
+
+**Example:** A 50+ page `deepresearch.md` becomes a publication-ready scientific review in minutes.
+
+## 📋 Features
+
+### Paper Generation
+- **Automatic Structure**: Converts freeform notes into Introduction, Methods, Results, Discussion, Conclusions
+- **Smart Parsing**: Extracts effect sizes, citations, and quantitative findings automatically
+- **Multiple Output Formats**: HTML (no dependencies), PDF via Quarto
+- **Citation Management**: Automatic BibTeX generation from references
+
+### Data Analysis Pipeline
+- Validate and normalize raw research data
+- Build unified datasets from multiple sources
+- Generate analysis reports and visualizations
+- Integration with Quarto for reproducible manuscripts
+
+### Unified CLI
+- One command to rule them all: `catecholamine_cli.py`
+- Modular steps: run the full pipeline or individual stages
+- Progress tracking and error handling
 
 ## Manual Workflow
 
