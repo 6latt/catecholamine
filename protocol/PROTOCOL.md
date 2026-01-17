@@ -23,7 +23,7 @@ Data is organized by **species** (human, animal model, in vitro) and tagged by *
 
 Include a study if it meets at least one of these criteria:
 
-1. **Quantitative Outcome:** Study reports quantitative behavioral or cognitive outcomes with manipulation or measurement of dopamine/norepinephrine tone (drug intervention, stress, genotype, PET imaging, microdialysis, receptor density measurements, etc.)
+1. **Quantitative Outcome:** Study reports quantitative behavioral or cognitive outcomes with manipulation or measurement of dopamine/norepinephrine tone (drug intervention, stress, genotype, PET imaging, microdialysis, receptor density measurements, etc.).
 
 2. **Effect Size Data:** Study provides sufficient summary statistics to compute an effect size, or reports effect sizes directly
 
