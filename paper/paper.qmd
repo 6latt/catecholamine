@@ -1,5 +1,5 @@
 ---
-title: "catecholamine tone and pfc performance: a multidimensional synthesis"
+title: "Catecholamine Tone and Prefrontal Cortex Performance: A Multidimensional Synthesis"
 format:
   html:
     toc: true
@@ -11,23 +11,23 @@ execute:
 bibliography: ../refs/references.bib
 ---
 
-## what this paper is
+## Overview
 
-this doc is meant to be a living synthesis: we ingest *quantitative* findings (tables, supplementals, digitized curves), normalize them into a master dataset, then analyze across domains:
+This document provides a living synthesis of quantitative findings on catecholamine effects across cognitive domains. We integrate data from multiple sources (tables, supplementary materials, digitized curves), normalize them into a unified dataset, and analyze effects across:
 
-- attention
-- working memory
-- flexibility
-- salience
-- mood / motivation
+- Attention
+- Working Memory
+- Cognitive Flexibility
+- Salience Processing
+- Mood and Motivation
 
-## protocol
+## Research Protocol
 
 {{< include ../protocol/PROTOCOL.md >}}
 
-## data + provenance
+## Data and Provenance
 
-we keep raw extractions immutable in `data/raw/` and build `data/derived/master_dataset.parquet` with scripts.
+Raw data extractions are maintained as immutable files in `data/raw/`. The master dataset is generated from these raw files using automated scripts and saved to `data/derived/master_dataset.parquet`.
 
 ```{python}
 from pathlib import Path
@@ -59,7 +59,7 @@ if result.returncode != 0:
         print(result.stderr)
 ```
 
-## study matrix (what we have, and where)
+## Study Matrix
 
 ```{python}
 import pandas as pd
@@ -69,7 +69,7 @@ matrix = pd.read_csv(matrix_path) if matrix_path.exists() else pd.DataFrame()
 matrix.head(20)
 ```
 
-## example figure: biomarker vs behavior (same study_id)
+## Example Figure: Biomarker vs Behavior
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -96,7 +96,9 @@ plt.show()
 merged.head()
 ```
 
-## contradictions (cells with both + and - effects)
+## Contradictory Findings
+
+The following table shows cases where both positive and negative effects were observed for the same domain, species, and population:
 
 ```{python}
 contr_path = ROOT / "reports" / "contradictions.csv"
@@ -104,6 +106,6 @@ contr = pd.read_csv(contr_path) if contr_path.exists() else pd.DataFrame()
 contr.head(50)
 ```
 
-## citations
+## References
 
-when you add real bib entries, cite like this: @your_paper_key.
+Citations can be added using the format `@citation_key` where the citation key corresponds to an entry in `refs/references.bib`.
