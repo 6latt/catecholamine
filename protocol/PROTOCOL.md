@@ -1,51 +1,58 @@
-# protocol (anti-cherrypick)
+# Research Protocol
 
-this repo is built to **avoid cherry-picking** by forcing a paper-by-paper log of what was extracted, how it was extracted, and what was excluded.
+## Anti-Cherry-Picking Approach
 
-## scope
+This repository is designed to prevent cherry-picking by maintaining a comprehensive, paper-by-paper log that documents:
+- What data was extracted
+- How extraction was performed
+- What was excluded and why
 
-we're building quantitative datasets that relate catecholamine biology (dopamine + norepinephrine systems) to:
+## Research Scope
 
-- attention / sustained attention / vigilance
-- working memory
-- cognitive flexibility (set shifting / reversal)
-- salience processing (phasic vs tonic; network switching)
-- mood / motivation / anhedonia
+This project builds quantitative datasets relating catecholamine biology (dopamine and norepinephrine systems) to cognitive and affective domains:
 
-we keep **species** separate (human vs animal vs in vitro), and we tag population (adhd / asd / mdd / anxiety / schizophrenia / control, etc.).
+- Attention, sustained attention, and vigilance
+- Working memory
+- Cognitive flexibility (set shifting and reversal learning)
+- Salience processing (phasic vs tonic activity, network switching)
+- Mood, motivation, and anhedonia
 
-## inclusion rules (v0)
+Data is organized by **species** (human, animal model, in vitro) and tagged by **population** (ADHD, ASD, MDD, anxiety, schizophrenia, control, etc.).
 
-include a study if it has at least one of:
+## Inclusion Criteria (Version 0)
 
-1) quantitative outcome + manipulation or measurement of DA/NE tone (drug, stress, genotype, PET, microdialysis, receptor density, etc.)
-2) enough summary statistics to compute an effect size (or the paper already reports an effect size)
+Include a study if it meets at least one of these criteria:
 
-exclude if:
+1. **Quantitative Outcome:** Study reports quantitative behavioral or cognitive outcomes with manipulation or measurement of dopamine/norepinephrine tone (drug intervention, stress, genotype, PET imaging, microdialysis, receptor density measurements, etc.)
 
-- outcome isn't interpretable (no task definition / no metric)
-- no usable quantitative results (and figures aren't digitizable)
+2. **Effect Size Data:** Study provides sufficient summary statistics to compute an effect size, or reports effect sizes directly
 
-## extraction rules
+### Exclusion Criteria
 
-- prefer tables/supplemental csvs over figure digitization.
-- if digitizing a figure, store digitized points as `data/raw/<paper_key>/digitized/<figure_id>.csv` and set `extraction_method: digitized`.
-- never delete “bad” results; mark them with `quality_flags`.
+Exclude studies if:
+- Outcome measures are not interpretable (no task definition or measurement metric)
+- No usable quantitative results are available and figures cannot be reliably digitized
 
-## required metadata per raw file
+## Data Extraction Rules
 
-every raw dataset must have a `.meta.yaml` with:
+- **Preference:** Use tables and supplementary CSV files over figure digitization when available
+- **Figure Digitization:** When digitizing figures, store data as `data/raw/<paper_key>/digitized/<figure_id>.csv` and set `extraction_method: digitized` in metadata
+- **Quality Control:** Never delete questionable results; instead, mark them with `quality_flags` in the metadata
 
-- citation (doi/pmid if possible)
-- species + population
-- task domain + task name
-- outcome and units
-- manipulation/measurement description
-- extraction method and notes
+## Required Metadata
 
-see `schemas/raw_meta.schema.yaml`.
+Every raw dataset file must have an accompanying `.meta.yaml` file containing:
 
-## reproducibility
+- Citation information (DOI or PMID when available)
+- Species and population details
+- Task domain and task name
+- Outcome measures and units
+- Manipulation or measurement description
+- Extraction method and relevant notes
 
-- all derived datasets must be rebuildable from `data/raw/` using `scripts/build_dataset.py`.
-- figures in the paper are generated from code (no manual figure editing).
+Refer to `schemas/raw_meta.schema.yaml` for the complete specification.
+
+## Reproducibility Standards
+
+- **Derived Datasets:** All derived datasets must be rebuildable from `data/raw/` using `scripts/build_dataset.py`
+- **Figures:** All figures in manuscripts must be generated from code (no manual figure editing permitted)
