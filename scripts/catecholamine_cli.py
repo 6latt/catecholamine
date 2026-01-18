@@ -9,6 +9,7 @@ research notes into structured scientific papers.
 from __future__ import annotations
 
 import argparse
+import shutil
 import sys
 from pathlib import Path
 import subprocess
@@ -75,12 +76,9 @@ def render_paper(args):
         return 1
     
     # Try Quarto first, fall back to simple renderer
-    quarto_installed = subprocess.run(
-        ["which", "quarto"], 
-        capture_output=True
-    ).returncode == 0
+    quarto_installed = shutil.which("quarto") is not None
     
-    if quarto_installed and not args.simple:
+    if quarto_installed and not getattr(args, "simple", False):
         print("\nUsing Quarto for rendering...")
         cmd = ["quarto", "render", qmd_file]
         result = subprocess.run(cmd, cwd=paper_dir)

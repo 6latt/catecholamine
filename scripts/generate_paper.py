@@ -11,8 +11,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Dict, List, Tuple
-import yaml
+from typing import Any, Dict, List
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,7 +20,7 @@ PAPER_DIR = ROOT / "paper"
 REFS_DIR = ROOT / "refs"
 
 
-def parse_deepresearch() -> Dict[str, any]:
+def parse_deepresearch() -> Dict[str, Any]:
     """
     Parse the deepresearch.md file and extract structured information.
     
@@ -32,22 +31,45 @@ def parse_deepresearch() -> Dict[str, any]:
     
     content = DEEPRESEARCH.read_text()
     
+    # Helper to decide whether a line is likely a section header
+    def _looks_like_section_header(line: str, next_line: str) -> bool:
+        if not line:
+            return False
+        # Exclude markdown headers and indented content
+        if line.startswith('#') or line.startswith('\t') or line.startswith(' '):
+            return False
+        # Basic heuristic: long, capitalized, not sentence-ending
+        if len(line) <= 20 or not line[0].isupper() or line.endswith('.'):
+            return False
+        # Require some structural indication that this is a header
+        next_stripped = next_line.strip()
+        if next_stripped == "":
+            return True
+        # Underlined-style headers, e.g.:
+        # Section Title
+        # -----------
+        if re.match(r"^[-=]{3,}\s*$", next_stripped):
+            return True
+        return False
+    
     # Extract sections by looking for major headings
     sections = {}
     current_section = None
     current_content = []
     
     lines = content.split('\n')
-    for line in lines:
+    for idx, line in enumerate(lines):
+        next_line = lines[idx + 1] if idx + 1 < len(lines) else ""
         # Match major sections (e.g., "Attention and Attentional Control")
-        if line and not line.startswith('#') and not line.startswith('\t') and len(line) > 20:
-            # Check if this might be a section header (capitalized, no period at end)
-            if line[0].isupper() and not line.endswith('.') and not line.startswith(' '):
-                if current_section:
-                    sections[current_section] = '\n'.join(current_content)
-                current_section = line.strip()
-                current_content = []
+        if _looks_like_section_header(line, next_line):
+            if current_section:
+                sections[current_section] = '\n'.join(current_content)
+            current_section = line.strip()
+            current_content = []
+            # Skip underline if present
+            if next_line.strip() and re.match(r"^[-=]{3,}\s*$", next_line.strip()):
                 continue
+            continue
         
         if current_section:
             current_content.append(line)
@@ -92,7 +114,7 @@ def extract_citations(content: str) -> List[str]:
     return list(set(citations))
 
 
-def extract_findings(content: str) -> List[Dict[str, any]]:
+def extract_findings(content: str) -> List[Dict[str, Any]]:
     """Extract key findings with effect sizes and statistics."""
     findings = []
     
@@ -141,6 +163,8 @@ def generate_introduction(data: Dict) -> str:
     
     # Use the introduction from deepresearch if available
     intro_section = sections.get('Introduction and Key Concepts', '')
+    # Clean citation placeholders
+    intro_section = intro_section.replace('￼', '')
     
     intro = f"""
 ## Introduction
@@ -202,6 +226,8 @@ Rather than conducting a formal meta-analysis, we provide a narrative synthesis 
 
 def generate_results_section(section_name: str, section_content: str) -> str:
     """Generate a results subsection from deepresearch content."""
+    # Clean citation placeholders
+    section_content = section_content.replace('￼', '')
     return f"""
 ### {section_name}
 
@@ -327,7 +353,6 @@ def generate_paper_qmd(data: Dict) -> str:
     methods = generate_methods(data)
     
     # Generate results sections from deepresearch sections
-    results_sections = []
     key_sections = [
         'Attention and Attentional Control',
         'Working Memory (WM) and Executive Control',

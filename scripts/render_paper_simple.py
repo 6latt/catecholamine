@@ -39,11 +39,11 @@ def markdown_to_html(text: str) -> str:
     text = re.sub(r'^## (.+)$', r'<h2>\1</h2>', text, flags=re.MULTILINE)
     text = re.sub(r'^# (.+)$', r'<h1>\1</h1>', text, flags=re.MULTILINE)
     
-    # Bold
+    # Bold (process first to avoid conflict with italic)
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
     
-    # Italic
-    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    # Italic (avoid matching asterisks that are part of bold or other adjacent-asterisk syntax)
+    text = re.sub(r'(?<!\*)\*([^*]+?)\*(?!\*)', r'<em>\1</em>', text)
     
     # Code
     text = re.sub(r'`(.+?)`', r'<code>\1</code>', text)
@@ -52,28 +52,42 @@ def markdown_to_html(text: str) -> str:
     lines = text.split('\n')
     output_lines = []
     in_list = False
+    list_type = None
     
     for line in lines:
         if re.match(r'^\d+\.\s', line):
+            # Numbered list item
+            if in_list and list_type != 'ol':
+                # Close previous list if it's a different type
+                output_lines.append(f'</{list_type}>')
+                in_list = False
             if not in_list:
                 output_lines.append('<ol>')
-                in_list = 'ol'
+                in_list = True
+                list_type = 'ol'
             item = re.sub(r'^\d+\.\s', '', line)
             output_lines.append(f'<li>{item}</li>')
         elif line.strip().startswith('-'):
+            # Bullet list item
+            if in_list and list_type != 'ul':
+                # Close previous list if it's a different type
+                output_lines.append(f'</{list_type}>')
+                in_list = False
             if not in_list:
                 output_lines.append('<ul>')
-                in_list = 'ul'
+                in_list = True
+                list_type = 'ul'
             item = line.strip()[1:].strip()
             output_lines.append(f'<li>{item}</li>')
         else:
             if in_list:
-                output_lines.append(f'</{in_list}>')
+                output_lines.append(f'</{list_type}>')
                 in_list = False
+                list_type = None
             output_lines.append(line)
     
     if in_list:
-        output_lines.append(f'</{in_list}>')
+        output_lines.append(f'</{list_type}>')
     
     text = '\n'.join(output_lines)
     
