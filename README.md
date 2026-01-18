@@ -1,15 +1,64 @@
 # Catecholamine Research Repository
 
-A reproducible research pipeline for analyzing catecholamine effects on prefrontal cortex performance.
+**Automatically generate scientific papers from unstructured research notes.**
 
-## Overview
+A reproducible research pipeline that converts deep research notes into structured scientific papers with proper formatting, citations, and analysis.
 
-This repository provides a systematic pipeline to:
-- Collect and normalize quantitative findings from research papers (tables, supplementary data, digitized curves)
-- Analyze data across cognitive domains (attention, working memory, flexibility, salience, mood)
-- Generate reproducible manuscripts with citations and auto-generated figures
+## 🚀 Quick Start
 
-## Workflow
+Generate a complete scientific paper in seconds:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the paper generation pipeline
+python scripts/catecholamine_cli.py full --simple
+```
+
+**That's it!** Your paper will be at `paper/_output/generated_paper.html`
+
+### Or try the interactive demo:
+
+```bash
+python demo.py
+```
+
+## ✨ What This Does
+
+Transforms unstructured research notes (like `deepresearch.md`) into:
+- ✅ **Structured scientific paper** with proper sections
+- ✅ **Abstract** synthesizing key findings  
+- ✅ **Methods** section with quality criteria
+- ✅ **Results** organized by cognitive domain
+- ✅ **Discussion** with clinical implications
+- ✅ **Effect size extraction** from research notes
+- ✅ **HTML/PDF output** ready for publication
+
+**Example:** A 50+ page `deepresearch.md` becomes a publication-ready scientific review in minutes.
+
+## 📋 Features
+
+### Paper Generation
+- **Automatic Structure**: Converts freeform notes into Introduction, Methods, Results, Discussion, Conclusions
+- **Smart Parsing**: Extracts effect sizes, citations, and quantitative findings automatically
+- **Multiple Output Formats**: HTML (no dependencies), PDF via Quarto
+- **Citation Management**: Automatic BibTeX generation from references
+
+### Data Analysis Pipeline
+- Validate and normalize raw research data
+- Build unified datasets from multiple sources
+- Generate analysis reports and visualizations
+- Integration with Quarto for reproducible manuscripts
+
+### Unified CLI
+- One command to rule them all: `catecholamine_cli.py`
+- Modular steps: run the full pipeline or individual stages
+- Progress tracking and error handling
+
+## Manual Workflow
+
+### Traditional Data Analysis Pipeline
 
 1. Place **raw** extracted data in `data/raw/` (CSV/TSV format). Never edit raw data files in place.
 2. For each raw data file, create a sibling metadata file: `<file>.csv.meta.yaml`
@@ -17,6 +66,49 @@ This repository provides a systematic pipeline to:
 4. Run `python scripts/build_dataset.py` to produce `data/derived/master_dataset.parquet`
 5. Run `python scripts/build_reports.py` to generate `reports/*.csv` files used by the paper
 6. Render the paper with Quarto: `quarto render paper/paper.qmd`
+
+### Paper Generation from Deep Research
+
+If you have comprehensive research notes in `deepresearch.md`, you can automatically generate a structured scientific paper:
+
+```bash
+# Generate the paper structure from deepresearch.md
+python scripts/generate_paper.py
+
+# Render to HTML (works without Quarto)
+python scripts/render_paper_simple.py
+
+# Or render with Quarto (if installed)
+cd paper
+quarto render generated_paper.qmd
+```
+
+## CLI Tool
+
+The `catecholamine_cli.py` provides a unified interface for all operations:
+
+```bash
+# Run the complete pipeline
+python scripts/catecholamine_cli.py full
+
+# Generate paper from deepresearch.md only
+python scripts/catecholamine_cli.py generate
+
+# Render the generated paper
+python scripts/catecholamine_cli.py render --source generated
+
+# Validate data
+python scripts/catecholamine_cli.py validate
+
+# Build dataset
+python scripts/catecholamine_cli.py build
+
+# Build reports
+python scripts/catecholamine_cli.py reports
+
+# See all options
+python scripts/catecholamine_cli.py --help
+```
 
 ## Why Quarto?
 
