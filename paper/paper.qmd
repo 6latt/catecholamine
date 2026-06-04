@@ -1,111 +1,445 @@
 ---
-title: "Catecholamine Tone and Prefrontal Cortex Performance: A Multidimensional Synthesis"
+title: "Catecholamine Tone and the Tuning of Prefrontal Cognition: An Inverted-U Synthesis Across Attention, Working Memory, Flexibility, Salience, and Mood"
+author:
+  - name: "Aaron Carmichael"
+date: "2026-06-04"
+abstract: |
+  Dopamine (DA) and norepinephrine (NE) are the two catecholamine neuromodulators
+  that set the operating point of the prefrontal cortex (PFC) and its connected
+  circuits. A recurring organizing principle across cognition is the *inverted-U*:
+  performance is maximized at an intermediate level of catecholamine signaling and
+  degrades when tone is either too low or too high. This review synthesizes
+  quantitative evidence — meta-analyses, controlled pharmacological trials, human
+  PET imaging, and animal lesion work — for inverted-U and related dose–response
+  effects across five domains: attention, working memory, cognitive flexibility,
+  salience processing, and mood. A meta-analysis of 75 studies confirms a negative
+  quadratic relationship between prefrontal dopamine and working memory, with D1-receptor
+  signaling alone accounting for ~26% of performance variance versus ~10% for bulk
+  dopamine. The same framework explains why catecholaminergic drugs help some
+  individuals and harm others: their effect depends on where a person starts on the
+  curve. We develop four mechanistic ideas that unify the literature — the inverted-U
+  itself, the complementary D1/D2 ("stability vs. flexibility") division of labor, the
+  locus coeruleus adaptive-gain account of arousal, and a regional/receptor-specificity
+  caveat — and apply them to ADHD, anxiety, Parkinson's disease, autism, and depression.
+  We close with the contradictions the framework does not yet absorb and what a
+  precision-psychiatry program would need to measure.
 format:
   html:
     toc: true
+    toc-depth: 3
     number-sections: true
+    theme: cosmo
+    embed-resources: true
+    fig-cap-location: bottom
+  pdf:
+    toc: true
+    number-sections: true
+    documentclass: scrartcl
+    geometry:
+      - margin=1in
+    fig-cap-location: bottom
+bibliography: ../refs/references.bib
+link-citations: true
 execute:
   echo: false
   warning: false
   message: false
-bibliography: ../refs/references.bib
 ---
 
-## Overview
+# Introduction {#sec-intro}
 
-This document provides a living synthesis of quantitative findings on catecholamine effects across cognitive domains. We integrate data from multiple sources (tables, supplementary materials, digitized curves), normalize them into a unified dataset, and analyze effects across:
+Dopamine (DA) and norepinephrine (NE) are catecholamines: small-molecule
+neuromodulators synthesized from tyrosine that, rather than carrying point-to-point
+messages, broadcast a slower "state" signal that biases how target circuits compute.
+Their influence is strongest in the prefrontal cortex (PFC) — the region that holds
+goals online, allocates attention, switches strategies, and regulates emotion —
+and in the fronto-striatal loops the PFC controls [@arnsten2011; @robbins2009].
+Because the same chemical can be tuned up or down, the central clinical and cognitive
+question is rarely "more or less?" but "how much, where, and starting from what
+baseline?"
 
-- Attention
-- Working Memory
-- Cognitive Flexibility
-- Salience Processing
-- Mood and Motivation
+The answer, repeated across species, tasks, and decades, is an **inverted-U**: too
+little catecholamine signaling and the PFC is noisy and distractible; too much and it
+is rigid, over-aroused, or taken "offline"; in between lies an optimum
+[@cools2011; @arnsten2011]. This single curve reframes a literature that otherwise
+looks contradictory — a drug that sharpens one person's focus dulls another's — as a
+matter of *position on the curve* rather than a disagreement about the drug. The point
+is not academic: every FDA-approved ADHD medication works by raising DA and/or NE
+signaling, and the inverted-U predicts who will benefit and who will be pushed past
+their peak.
 
-## Research Protocol
+This review has two goals. The first is **synthetic**: to assemble the quantitative
+evidence — effect sizes, variance explained, dose–response reversals — for
+catecholamine modulation across five cognitive/affective domains (attention, working
+memory, cognitive flexibility, salience, mood). The second is **explanatory**: to
+develop a small set of mechanistic ideas (@sec-framework) that make the scattered
+findings cohere, so the reader comes away able to predict, not just recall, how a given
+manipulation should act in a given brain.
 
-{{< include ../protocol/PROTOCOL.md >}}
+# A conceptual framework {#sec-framework}
 
-## Data and Provenance
+Four ideas do most of the explanatory work in this literature. They are not rival
+theories; they are complementary lenses on the same neuromodulatory system.
 
-Raw data extractions are maintained as immutable files in `data/raw/`. The master dataset is generated from these raw files using automated scripts and saved to `data/derived/master_dataset.parquet`.
+**1. The inverted-U (dose–response).** Plot performance against catecholamine
+signaling and you get an inverted parabola rather than a straight line
+(@fig-invertedu). The clearest quantitative demonstration comes from a meta-analysis of
+75 studies in rodents, monkeys, and humans, which found a significant negative
+quadratic relationship between prefrontal dopamine and working memory (p < 0.001)
+[@weber2022]. Crucially, the fit was far stronger for D1-receptor signaling
+(~26% of variance) than for bulk dopamine levels (~10%) [@weber2022], implicating a
+specific receptor mechanism rather than "dopamine in general." Mechanistically,
+moderate D1 stimulation sharpens signal-to-noise in PFC microcircuits — suppressing
+noisy background firing while preserving tuned, task-relevant activity — whereas
+excessive D1 drive suppresses firing indiscriminately, collapsing the representation it
+was meant to protect [@arnsten2011; @cools2011].
+
+**2. D1 vs. D2 — stability vs. flexibility.** The two dopamine receptor families pull
+in complementary directions. D1 signaling stabilizes active representations (good for
+holding a goal in mind); D2 signaling destabilizes them, letting new information
+overwrite the current state (good for switching) [@cools2019; @floresco2013]. This
+"dual-state" division maps onto anatomy — D1-dominated PFC supporting maintenance,
+D2-sensitive striatum supporting updating — and onto a deep cognitive trade-off
+between **stability** (focus, persistence) and **flexibility** (switching,
+exploration). Optimal cognition is not maximal stability or maximal flexibility but
+the right balance for the task at hand.
+
+**3. Adaptive gain in the locus coeruleus.** Norepinephrine originates almost entirely
+from the locus coeruleus (LC), whose firing has two modes: *phasic* bursts time-locked
+to task-relevant events, which enhance encoding and focused engagement, and elevated
+*tonic* firing, which promotes a distractible, scanning state. The adaptive-gain theory
+casts this as a deliberate exploit–explore switch: phasic LC favors exploiting the
+current task, tonic LC favors disengaging to sample alternatives [@astonjones2005].
+Arousal therefore has its own inverted-U — the century-old Yerkes–Dodson law
+[@yerkes1908] — with drowsy inattention at one end and anxious hypervigilance at the
+other.
+
+**4. Region and receptor specificity (the inconvenient caveat).** There is no single
+"optimal dopamine level" for the whole brain. The dose that restores a depleted dorsal
+striatum can simultaneously *overdose* an intact ventral striatum or frontal cortex —
+the basis of the "dopamine overdose" phenomenon in Parkinson's disease [@cools2019].
+Any clinical prediction must therefore specify *which circuit* and *which receptor*,
+not just whether a drug raises or lowers catecholamines.
 
 ```{python}
-from pathlib import Path
-import pandas as pd
-
-ROOT = Path.cwd().parents[0]
-df = pd.read_parquet(ROOT / "data" / "derived" / "master_dataset.parquet")
-df.head()
-```
-
-```{python}
-# generate small report tables used below
-import subprocess
-
-result = subprocess.run(
-    ["python", "scripts/build_reports.py"],
-    cwd=ROOT,
-    check=False,
-    capture_output=True,
-    text=True,
-)
-if result.returncode != 0:
-    print("Error: build_reports.py failed with exit code", result.returncode)
-    if result.stdout:
-        print("--- build_reports.py stdout ---")
-        print(result.stdout)
-    if result.stderr:
-        print("--- build_reports.py stderr ---")
-        print(result.stderr)
-```
-
-## Study Matrix
-
-```{python}
-import pandas as pd
-
-matrix_path = ROOT / "reports" / "study_matrix.csv"
-matrix = pd.read_csv(matrix_path) if matrix_path.exists() else pd.DataFrame()
-matrix.head(20)
-```
-
-## Example Figure: Biomarker vs Behavior
-
-```{python}
+#| label: fig-invertedu
+#| fig-cap: "Schematic inverted-U relationship between prefrontal catecholamine signaling and cognitive performance, informed by the meta-analytic findings of Weber et al. (2022). Performance peaks at an intermediate level. The red curve (D1-receptor signaling) is steeper and accounts for more performance variance (~26%) than bulk dopamine level (blue, ~10%). Clinical states map onto positions along the axis: deficient tone (e.g., ADHD, early Parkinson's disease) sits left of the optimum; excessive tone (e.g., acute stress, anxiety) sits right of it. The same drug moves a patient rightward, helping those who start low and harming those already near the peak."
+#| fig-width: 7
+#| fig-height: 4.5
+import numpy as np
 import matplotlib.pyplot as plt
 
-import numpy as np
+x = np.linspace(0, 10, 400)
+peak = 5.0
+# Two inverted-U curves: D1 (sharper, taller) and bulk dopamine (broader, shallower)
+d1 = np.exp(-((x - peak) ** 2) / (2 * 1.6 ** 2))
+da = 0.62 * np.exp(-((x - peak) ** 2) / (2 * 3.0 ** 2))
 
-beh = df[df["measure_kind"] == "behavior"][
-    ["paper_key", "study_id", "effect_value", "measure_name"]
-].rename(columns={"effect_value": "behavior_d", "measure_name": "behavior_measure"})
+fig, ax = plt.subplots()
+ax.plot(x, d1, color="#c0392b", lw=2.4, label="D1-receptor signaling (~26% variance)")
+ax.plot(x, da, color="#2c6fbb", lw=2.4, label="Bulk dopamine level (~10% variance)")
+ax.axvline(peak, color="#888888", ls="--", lw=1)
 
-bio = df[df["measure_kind"] == "biomarker"][
-    ["paper_key", "study_id", "effect_value", "measure_name"]
-].rename(columns={"effect_value": "biomarker_d", "measure_name": "biomarker_measure"})
+ax.annotate("optimum", xy=(peak, 1.02), ha="center", va="bottom", fontsize=9, color="#444444")
+ax.annotate("too low\n(ADHD, early PD)", xy=(1.6, 0.10), ha="center", fontsize=8, color="#444444")
+ax.annotate("too high\n(stress, anxiety)", xy=(8.4, 0.10), ha="center", fontsize=8, color="#444444")
 
-merged = beh.merge(bio, on=["paper_key", "study_id"], how="inner")
-
-plt.figure()
-plt.scatter(merged["biomarker_d"], merged["behavior_d"])
-plt.xlabel("biomarker effect (d)")
-plt.ylabel("behavior effect (d)")
-plt.title("behavior vs biomarker effect sizes (paired by study_id)")
+ax.set_xlabel("Prefrontal catecholamine signaling  (low → high)")
+ax.set_ylabel("Cognitive performance")
+ax.set_ylim(0, 1.15)
+ax.set_xlim(0, 10)
+ax.set_xticks([])
+ax.set_yticks([])
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+ax.legend(loc="lower center", frameon=False, fontsize=8)
+fig.tight_layout()
 plt.show()
-
-merged.head()
 ```
 
-## Contradictory Findings
+# Scope and evidence base {#sec-methods}
 
-The following table shows cases where both positive and negative effects were observed for the same domain, species, and population:
+This is a narrative synthesis rather than a formal meta-analysis. We prioritized
+quantitative evidence: meta-analyses and systematic reviews where available, then
+controlled pharmacological and genetic-stratification trials in humans, human PET and
+fMRI studies, and mechanistic animal work (pharmacology, lesions, region-specific
+depletions). For each domain we report effect sizes (Cohen's *d*, standardized mean
+differences, variance explained) when the primary literature provides them, note
+species and clinical population, and explicitly flag findings that resist the
+inverted-U account. Throughout, we compare clinical populations (ADHD, anxiety, autism
+spectrum, Parkinson's disease, depression) against neurotypical baselines, because the
+framework's central claim — that drug effects depend on baseline tone — can only be
+tested by such comparison.
 
-```{python}
-contr_path = ROOT / "reports" / "contradictions.csv"
-contr = pd.read_csv(contr_path) if contr_path.exists() else pd.DataFrame()
-contr.head(50)
-```
+# Domain 1 — Attention and attentional control {#sec-attention}
 
-## References
+Attention is the gating function the PFC and its noradrenergic input perform on
+incoming information. Phasic LC-NE bursts enhance the cortical encoding of salient,
+task-relevant signals while moderate tone keeps the fronto-parietal control network
+engaged; in large human samples, stronger intrinsic coupling between the LC and the
+salience network (anterior insula, anterior cingulate) is associated with better
+attentional ability, whereas weak LC–salience coupling tracks attentional deficits
+[@neal2023; @astonjones2005]. Push tone too high, however — as in stress or anxiety —
+and elevated *tonic* NE produces over-arousal and hypervigilance, with attention
+captured by threat and novelty at the expense of goal-directed focus. Causal animal
+work confirms the direction: raising tonic LC firing while blunting phasic
+responsiveness induces exactly this over-alert, distractible state
+[@bretonprovencher2019]. This is the Yerkes–Dodson curve made neural: too little NE
+yields drowsy inattention, too much yields scattered hypervigilance, and the middle
+supports peak vigilance [@yerkes1908].
 
-Citations can be added using the format `@citation_key` where the citation key corresponds to an entry in `refs/references.bib`.
+**ADHD — starting left of the optimum.** ADHD is, in this framework, a state of
+deficient PFC catecholamine tone — too far left on @fig-invertedu — and stimulants
+(methylphenidate, amphetamines) act by blocking DA/NE reuptake to move patients toward
+the optimum [@arnsten2011]. A meta-analysis of 36 pediatric trials found methylphenidate
+superior to placebo across attention-related measures, with effect sizes in the
+small-to-moderate range: reaction time SMD ≈ 0.29, reaction-time *variability* SMD ≈ 0.73,
+and response inhibition SMD ≈ 0.32 [@coghill2014]. The variability effect is the
+largest, fitting the idea that stimulants reduce moment-to-moment neural noise rather
+than simply speeding processing. Critically, the benefit is not uniform: baseline
+performance moderates response, with the children who start with the poorest inhibitory
+control and attention gaining the most [@fosco2021]. Stimulants "lift up" those
+furthest below the optimum more than those already near it — precisely the inverted-U
+prediction.
+
+**Anxiety — starting right of the optimum.** In anxiety disorders the catecholamine
+problem is inverted: noradrenergic tone is too high. Stress peptides drive LC firing,
+NE floods amygdala and cortical targets, and attention is biased toward threat
+[@arnsten2009]. Here the therapeutic move is *down*-regulation — β-adrenergic blockade
+(propranolol) blunts hyperarousal and has shown efficacy against trauma-related
+hyper-reactivity — rebalancing the salience filter toward neutral, goal-relevant cues.
+
+**Autism — a different correlational structure.** PET imaging found no gross group
+difference in striatal D1-receptor or thalamic NE-transporter binding between autistic
+adults and controls; what differed was the *correlational architecture*: within the
+autistic group, higher striatal D1 binding tracked *lower* "attention to detail"
+scores, and the NE-transporter–executive-function correlations seen in controls were
+absent [@kubota2020]. The implication is subtle but important — atypical attention in
+autism may reflect altered *coupling* between catecholamine signaling and behavior
+rather than a simple surplus or deficit of the transmitter.
+
+# Domain 2 — Working memory and executive control {#sec-wm}
+
+Working memory — holding and manipulating information over seconds — is the canonical
+inverted-U domain and the one with the hardest quantitative backbone. The 75-study
+meta-analysis establishes the negative quadratic relationship between prefrontal
+dopamine and WM accuracy, and shows that **D1-receptor signaling explains roughly 26%
+of WM variance versus ~10% for dopamine level** [@weber2022]. Mechanistically, moderate
+D1 tone improves signal-to-noise by quieting background firing and sharpening tuned
+delay-period activity; too little leaves representations weak and distractible, too
+much suppresses firing across the board [@arnsten2011; @cools2011].
+
+**Baseline-dependent drug reversals.** The strongest evidence that the curve is real
+comes from manipulations that *flip sign* with baseline. In aged monkeys with low PFC
+dopamine, a D1 agonist improves WM (moving them up the left limb); in young monkeys with
+normal tone, the same dose is neutral or harmful [@arnsten2011]. In humans, COMT
+genotype — which sets prefrontal dopamine breakdown and hence baseline tone — predicts
+the direction of amphetamine's effect on WM: enhancement in low-dopamine (Val/Val)
+individuals, impairment in high-dopamine (Met/Met) individuals [@cools2011]. One drug,
+opposite effects, fully explained by starting position.
+
+**The noradrenergic half.** NE tunes WM mainly through post-synaptic α2A-adrenoceptors:
+moderate NE strengthens the recurrent PFC connectivity that sustains a memory across a
+delay, which is why the α2A agonist guanfacine improves WM and attention
+[@arnsten2011]. Under acute stress, excess NE shifts to lower-affinity α1-receptors,
+triggering intracellular cascades (elevated cAMP, ion-channel modulation) that degrade
+the tuning and functionally take the PFC "offline," handing control to subcortical
+structures [@arnsten2009]. The stability the system normally provides collapses — an
+arrangement that is maladaptive in an exam but adaptive when a genuine emergency
+demands fast, habit-driven action.
+
+**Clinical anchors.** In ADHD, stimulants improve WM with modest effect sizes
+(executive-memory SMD ≈ 0.26 in meta-analysis), again largest in those with the
+poorest baseline [@coghill2014; @fosco2021]. In Parkinson's disease, dopamine
+replacement helps frontally dependent WM but illustrates the region-specificity caveat:
+L-DOPA raises dopamine globally and can overdose intact circuits even while treating
+depleted ones [@cools2019].
+
+**A contradiction worth keeping.** The framework is not unfalsifiable, and at least one
+result strains it. While the *meta-analytic* picture is a clean inverted-U, the
+modest variance explained — even D1 leaves ~74% unaccounted [@weber2022] — and reports
+of weak or absent correlations between individual dopamine-synthesis capacity and WM
+span suggest the relationship is non-linear, task-specific, and confounded by
+compensatory mechanisms (e.g., receptor up-regulation) rather than a tidy one-to-one
+mapping. The inverted-U is the central tendency, not the whole story.
+
+# Domain 3 — Cognitive flexibility and set-shifting {#sec-flex}
+
+If working memory is the stability domain, cognitive flexibility is the flexibility
+domain — and here **D2 receptors take the lead** [@vanholstein2011; @cools2019]. The
+decisive human evidence is a placebo-controlled, genotype-stratified, antagonist-controlled
+design: the D2 agonist bromocriptine improved task-switching, but *only* in subjects
+with genetically low dopamine; the benefit vanished in higher-dopamine subjects and was
+abolished by pre-treatment with the D2 antagonist sulpiride — pinning the effect to D2
+signaling and to baseline state simultaneously [@vanholstein2011]. This is the
+inverted-U and the receptor mechanism demonstrated in one experiment.
+
+Mechanistically, D2 activation *weakens* the current attractor state, allowing new
+information to reshape the network — exactly what switching requires — whereas
+D1-dominated stability promotes perseveration when it dominates [@cools2019;
+@floresco2013]. The trade-off has a sweet spot: too little D2 drive leaves thinking
+inert and perseverative; too much produces chaotic, undirected switching and impaired
+learning from feedback. In high-dopamine individuals a low dose of a D2 *blocker* can
+paradoxically improve performance by quieting an over-destabilized baseline
+[@cools2019].
+
+Animal work adds anatomy: striatal dopamine is needed to *implement* an intentional
+switch (depletions in dorsomedial striatum or caudate impair reversal and shifting),
+while wholesale removal of PFC catecholamines can superficially *ease* an
+extradimensional shift — but only because the animal can no longer maintain the
+original set. That is faux-flexibility from a loss of stability, not improved control
+[@robbins2009; @cools2019] — a clean illustration of why "more switching" is not the
+same as "better flexibility," and of the stability–flexibility trade-off at the core of
+the framework. Parkinson's disease again shows both sides: dopaminergic medication can
+restore shifting on dorsally dependent tasks while degrading reversal learning on
+ventrally dependent ones in the same patient, depending on dose and circuit
+[@cools2019].
+
+# Domain 4 — Salience detection and processing {#sec-salience}
+
+Salience is the brain's triage system — what gets flagged as worth processing — and it
+is a joint DA/NE venture. NE provides general, fast importance-tagging: phasic LC bursts
+coincide with the detection of task-relevant cues and reconfigure large-scale networks,
+increasing connectivity within the salience network and switching the brain from
+internally focused (default-mode) to externally engaged (task-positive) states
+[@astonjones2005; @neal2023]. Dopamine provides the *valuation* component: midbrain DA
+neurons fire to unexpected, motivationally significant events, tagging cues as worth
+approaching and learning about — the "incentive salience" or "wanting" signal that is
+dissociable from hedonic pleasure itself [@berridge1998].
+
+When the salience system mis-calibrates, the consequences are clinically legible.
+**Schizophrenia** offers the sharpest illustration of dopamine's salience role: the
+aberrant-salience hypothesis holds that excessive striatal dopamine attaches
+significance to trivial stimuli, and that delusions are the patient's effort to explain
+this misplaced importance — which is why D2-blocking antipsychotics dampen salience and
+extinguish the false associations [@kapur2003]. **ADHD** sits at the opposite extreme:
+blunted phasic dopamine means genuine rewards fail to capture sustained attention, so
+patients need larger or more immediate incentives, while weak PFC regulation lets
+trivial distractors through — distractibility and reward-insensitivity as two faces of
+under-tagged salience, both improved by stimulants that raise the striatal dopamine
+response to meaningful cues [@arnsten2011]. **Anxiety/PTSD** is over-tagging driven by
+high tonic NE — a world in which every shadow is flagged as threat, normalized by
+lowering noradrenergic tone [@arnsten2009; @bretonprovencher2019]. **Autism** shows a
+re-ordered salience hierarchy rather than uniformly high or low salience: reduced
+orienting to social cues alongside intense focus on specific non-social interests, a
+pattern plausibly rooted in atypical DA/NE coupling — consistent with the altered
+correlational structure between catecholamine binding and behavior reported in
+@kubota2020.
+
+The throughline: dopamine biases the organism toward what is *worth pursuing* while
+norepinephrine signals *pay attention now*. Balanced, they yield appropriate focus —
+turning to a speaker who says your name, stopping at a red light. Imbalanced, they
+produce the characteristic salience pathologies of each disorder.
+
+# Domain 5 — Mood, motivation, and emotion regulation {#sec-mood}
+
+Catecholamines do not stop at cognition; the same chemicals and largely the same
+circuits set motivation and affect. Dopamine, especially along the mesolimbic pathway
+(ventral tegmental area → nucleus accumbens and frontal cortex), underwrites reward,
+drive, and the *anticipation* of pleasure. Anhedonia — the loss of interest and
+motivation that is a core symptom of major depression — has long been modeled as
+blunted dopaminergic function, and the modern account sharpens this: the deficit is
+less in "liking" (consummatory pleasure) than in "wanting" and in the willingness to
+*work* for reward, an effort–value computation that dopamine directly supports
+[@treadway2011; @cooper2018]. Imaging is broadly consistent — reduced striatal dopamine
+release to reward and altered D2/D3 availability in depression — though findings are
+mixed enough to suggest pathophysiological subtypes (e.g., an inflammation-linked
+subtype) rather than one uniform dopamine lesion [@cooper2018].
+
+Therapeutically, the prediction holds: pro-dopaminergic interventions preferentially
+relieve anhedonia and low motivation. Bupropion (a DA/NE reuptake inhibitor) targets
+exactly these symptoms, stimulants are used off-label for refractory amotivation, and
+the effort-based-decision-making framework explains *why* these agents act on drive
+specifically rather than mood globally [@treadway2011; @cooper2018]. Norepinephrine
+contributes the energy-and-arousal axis of mood: too little tracks the fatigue and
+psychomotor retardation of depression (SNRIs such as venlafaxine and duloxetine help
+partly by raising it), too much tracks the hyperarousal of anxiety — its own
+inverted-U, mirroring the attentional one [@arnsten2009]. The two systems also interact:
+LC projections modulate midbrain dopamine firing, so a low-NE state can indirectly blunt
+phasic dopamine and compound anhedonia.
+
+The same disorders recur, now from the affective angle. Parkinson's disease carries high
+rates of depression tied to mesolimbic dopamine loss, partly responsive to dopaminergic
+therapy; antipsychotic D2 blockade can induce affective blunting as an iatrogenic
+anhedonia — the mirror image, confirming the link [@kapur2003]. The unifying statement
+is the same as for cognition: balanced catecholamine tone permits adaptive movement
+between affective states, while the extremes — apathetic depression at one pole, anxious
+hyperarousal at the other — are the mood-domain expression of too little versus too much.
+
+# Discussion {#sec-discussion}
+
+## What the framework buys us {#sec-buys}
+
+Across five domains the same small toolkit recurs. The **inverted-U** explains why
+catecholaminergic drugs are not uniformly pro-cognitive: they shift a patient rightward,
+which helps those starting low and harms those starting high — demonstrated most cleanly
+by the baseline-dependent sign reversals in monkeys (aged vs. young), in humans by COMT
+genotype, and by genotype-stratified bromocriptine [@arnsten2011; @cools2011;
+@vanholstein2011]. The **D1/D2 stability–flexibility** division explains why the optimum
+is task-dependent: working memory wants D1-mediated stability, set-shifting wants
+D2-mediated flexibility, and no single dopamine level is best for both
+[@cools2019; @floresco2013]. The **LC adaptive-gain** account ports the same logic to
+arousal and attention [@astonjones2005], and the **region/receptor-specificity** caveat
+explains the Parkinson's "overdose" dissociations that a one-number model cannot
+[@cools2019].
+
+## Clinical implications: one curve, many disorders {#sec-clinical}
+
+The disorders surveyed here line up along @fig-invertedu rather than into separate
+silos. **ADHD** and **early Parkinson's disease** sit left of the optimum (deficient
+tone, helped by raising it); **acute stress** and **anxiety/PTSD** sit right (excess
+tone, helped by lowering it); **depression** is a deficit on the motivational/dopamine
+axis; **autism** is better described as altered coupling and a re-ordered salience
+hierarchy than as a simple shift along one axis. The actionable consequence is that the
+*direction* of treatment is set by baseline tone, and effect sizes are modest precisely
+because cohorts mix patients at different positions on the curve — averaging
+left-limb responders with near-peak non-responders dilutes the mean
+[@coghill2014; @fosco2021].
+
+## Limitations and contradictions {#sec-limits}
+
+Honesty requires naming what the framework does not yet absorb. (i) Even the best
+single predictor — D1 signaling — leaves the large majority of working-memory variance
+unexplained, and some large-sample studies find weak links between individual dopamine
+metrics and cognition, implying strong moderation and compensation rather than a tidy
+function [@weber2022]. (ii) Much of the mechanistic precision (region-specific
+depletions, receptor-level dissociations) comes from rodents and non-human primates;
+human evidence is largely correlational or relies on coarse pharmacological and genetic
+proxies for "tone." (iii) "Catecholamine tone" is itself a simplification — phasic vs.
+tonic firing, receptor subtype, regional concentration, and serotonergic/cholinergic
+interactions all matter, and collapsing them onto one x-axis is a useful cartoon, not a
+measurement. (iv) The neurochemistry of autism in particular is heterogeneous enough
+that group means hide opposing subtypes [@kubota2020].
+
+## Future directions {#sec-future}
+
+The framework points to a concrete program. **Individual-level prediction**: combine
+genotype (e.g., COMT), PET/neuromelanin estimates of dopaminergic and LC integrity, and
+baseline cognitive performance to estimate where a patient sits on the curve *before*
+prescribing [@fosco2021]. **Dynamic measurement**: pupillometry and fast imaging to
+track phasic vs. tonic catecholamine states during tasks rather than inferring tone from
+a single scan [@astonjones2005]. **Circuit-specific intervention**: receptor- and
+region-selective agents (e.g., α2A or D1-selective compounds) that move one circuit
+without overdosing another [@cools2019]. The destination is precision psychiatry:
+matching catecholaminergic treatment to a measured neurochemical position rather than to
+a symptom label.
+
+# Conclusions {#sec-conclusions}
+
+Dopamine and norepinephrine tune prefrontal cognition along an inverted-U: optimal
+mid-range signaling supports attention, working-memory stability, cognitive flexibility,
+calibrated salience, and positive mood, while deficits and excesses both impair — in
+opposite ways and through different receptors. The framework's power is that it turns a
+contradictory drug literature into a single prediction (the effect depends on baseline
+position), is quantitatively anchored (a 75-study meta-analysis; D1 signaling explaining
+~26% of working-memory variance), and is mechanistically specified (D1 stability vs. D2
+flexibility, LC adaptive gain, region/receptor specificity). It also names its own
+limits: most variance remains unexplained, the strongest mechanistic evidence is from
+animals, and "tone" is a simplification. The practical horizon is clear — measure where
+a person sits on the curve, then move them toward the optimum rather than simply adding
+or subtracting catecholamines.
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

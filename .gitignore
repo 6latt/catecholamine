@@ -72,3 +72,7 @@ Thumbs.db
 
 # Zip archives
 *.zip
+
+# Quarto render scaffolding
+paper/paper_files/
+paper/.quarto/
