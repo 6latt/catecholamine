@@ -1,0 +1,11 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    uses: 6latt/vps-infra/.github/workflows/ci-python.yml@main
+    with:
+      python-version: "3.12"
